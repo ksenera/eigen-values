@@ -7,7 +7,7 @@ DATE: Tuesday, March 10th
 """
 
 # lower triangle system Lx = b
-def forward_sub(L, b):
+def forwardSub(L, b):
     # declare and initialize output vector x
     n = len(b)
     x = [0.0] * n
@@ -26,7 +26,7 @@ def forward_sub(L, b):
     return x
 
 # upper triangle system Ux = b 
-def back_sub(U, b):
+def backSub(U, b):
     # declare and initialize output vector x
     n = len(b)
     x = [0.0] * n
@@ -41,3 +41,11 @@ def back_sub(U, b):
             # bi = bi - uijxj {update RHS}
             b[i] = b[i] - U[i][j] * x[j]
     return x
+
+
+# from hints
+def RayleighQuotient(A, x, tolerance):
+    pass
+
+def qrIteration(A, tolerance):
+    pass
