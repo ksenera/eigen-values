@@ -95,7 +95,31 @@ def gaussElim(A, b):
 
 # from hints
 def RayleighQuotient(A, x, tolerance):
-    pass
+    n = len(x)
+    iterations = 0
+    flag = True
+    
+    while flag:
+        # sigma = (x^T A x) / (x^T x)
+        Ax = [sum(A[i][j] * x[j] for j in range(n)) for i in range(n)]
+        sigma = dot(x, Ax) / dot(x, x)
+        # solve (A - sigma*I)y = x using gaussElim
+        B = [row[:] for row in A]
+        for i in range(n):
+            B[i][i] -= sigma
+        y = gaussElim(B, x[:])
+        # xold = x
+        xold = x
+        # x = y / norm(y)
+        x = y / norm(y)
+        # if norm(x - xold) < tolerance: flag = False
+        if norm(x - xold) < tolerance:
+            return False
+        # iterations += 1
+        iterations += 1
+    
+        return sigma, iterations
+    
 
 def qrIteration(A, tolerance):
     pass
@@ -124,3 +148,6 @@ def gramSchmidt(A):
 
 def dot(a, b):
     return sum(a[i] * b[i] for i in range(len(a)))
+
+def norm(x):
+    return sum(x[i]**2 for i in range(len(x))) ** 0.5
