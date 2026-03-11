@@ -106,17 +106,17 @@ def gramSchmidt(A):
     
     for j in range(n):
         # extract column j from A
-        v = Q.append(A[i][j])
+        v = [A[i][j] for i in range(n)]
         
         # subtract out projection of every already-locked vector
         for i in range(j):
             # measure pollution: dot(v, Q[i]) / dot(Q[i], Q[i])
-            proj = np.dot(v, Q[i])/np.dot(Q[i], Q[i])
+            proj = dot(v, Q[i])/dot(Q[i], Q[i])
             # subtract it out
-            v -= proj
+            v = [v[k] - proj * Q[i][k] for k in range(n)]
         
         # normalize: divide by magnitude
-        mag = 1
+        mag = dot(v, v) ** 0.5
         q = [v[k] / mag for k in range(n)]
         Q.append(q)
     
