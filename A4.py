@@ -49,3 +49,25 @@ def RayleighQuotient(A, x, tolerance):
 
 def qrIteration(A, tolerance):
     pass
+
+def gram_schmidt(A):
+    n = len(A)
+    Q = []
+    
+    for j in range(n):
+        # extract column j from A
+        v = ___
+        
+        # subtract out projection of every already-locked vector
+        for i in range(j):
+            # measure pollution: dot(v, Q[i]) / dot(Q[i], Q[i])
+            proj = ___
+            # subtract it out
+            v = ___
+        
+        # normalize — divide by magnitude
+        mag = ___
+        q = [v[k] / mag for k in range(n)]
+        Q.append(q)
+    
+    return Q
