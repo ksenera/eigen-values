@@ -8,6 +8,11 @@ DATE: Tuesday, March 10th
 
 import numpy as np
 
+A_matrix = [[2.9766, 0.3945, 0.4198, 1.1159],
+            [0.3945, 2.7328, -0.3097, 0.1129],
+            [0.4198, -0.3097, 2.5675, 0.6079],
+            [1.1159, 0.1129, 0.6079, 1.7231]]
+
 # lower triangle system Lx = b
 def forwardSub(L, b):
     # declare and initialize output vector x
@@ -122,7 +127,22 @@ def RayleighQuotient(A, x, tolerance):
     
 
 def qrIteration(A, tolerance):
-    pass
+    n = len(A)
+    eigenvalues = [1.0] * n
+    iterations = 0
+    flag = True
+    while flag:
+        Q = gramSchmidt(A)
+        R = [[sum(Q[i][k] * A[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+        Anew = [[sum(R[i][k] * Q[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+        eigenvalNew = [Anew[i][i] for i in range(n)]
+        iterations += 1 
+        diff = norm([eigenvalNew[i] - eigenvalues[i] for i in range(n)])
+        if diff < tolerance:
+            return eigenvalNew, iterations
+        A = Anew
+        eigenvalues = eigenvalNew
+    return eigenvalues, iterations
 
 def gramSchmidt(A):
     n = len(A)
