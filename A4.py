@@ -92,7 +92,7 @@ def qrIteration(A, tolerance):
         Q = gramSchmidt(A)
         R = [[sum(Q[i][k] * A[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
         # Anew = R*Q
-        Anew = [[sum(R[i][k] * Q[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+        Anew = [[sum(R[i][k] * Q[j][k] for k in range(n)) for j in range(n)] for i in range(n)]
         # eignValusNew = diagonal elements of Anew
         eigenvalNew = [Anew[i][i] for i in range(n)]
         iterations += 1 
