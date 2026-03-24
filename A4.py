@@ -129,11 +129,12 @@ if __name__ == "__main__":
     vectors = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
     names = ["e1","e2","e3","e4"]
 
-    print("# Starting Eigen vector Eigen value Number of iterations")
+    print(f"{'#':<5}{'Starting Eigen vector':<25}{'Eigen value':<20}{'Number of iterations'}")
+    print("-" * 70)
     for idx in range(4):
         sigma, iters = RayleighQuotient(A_matrix, vectors[idx], tol)
-        print(idx+1, names[idx], sigma, iters)
+        print(f"{idx+1:<5}{names[idx]:<25}{sigma:<20.10f}{iters}")
 
     eigenvalues, iterations = qrIteration(A_matrix, tol)
-    print("The eigen values are:", eigenvalues)
+    print("\nThe eigen values are:", [round(e, 4) for e in eigenvalues])
     print("The number of iterations for the convergence is:", iterations)
