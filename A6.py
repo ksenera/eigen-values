@@ -29,11 +29,11 @@ def newton(f, grad_f, hessian_f, x0, step_fn, tol=1e-5, max_iter=1000):
         g = grad_f(x)
         H = hessian_f(x)
         if np.isscalar(x):
-            print(f"{k:<5}{x:<15.6f}{f(x):<15.6f}{g:<15.6f}")
+            print(f"{k:<5}{x:<15.4f}{f(x):<15.4f}{g:<15.4f}")
         else:
             xy  = f"({x[0]:.4f}, {x[1]:.4f})"
             gxy = f"[{g[0]:.4f}, {g[1]:.4f}]"
-            print(f"{k:<5}{xy:<20}{f(x):<15.6f}{gxy:<25}")
+            print(f"{k:<5}{xy:<20}{f(x):<15.4f}{gxy:<25}")
         if norm(g) < tol:
             break
         s = compute_step(H, g)
@@ -76,10 +76,10 @@ def hessian_f2(x):
 
 if __name__ == "__main__":
 
-    print(" Algorithm 1 (1-D) ")
-    print("f(x) = x^2 - 2x + 1,  interval [-0.5, 1.5],  tol = 1e-5")
+    print("Algorithm 1 (1-D) ")
+    print("f(x) = x^2 - 2x + 1,  interval [-0.5, 1.5],  tol = 1e-5\n")
     newton_1d(f1, derivative_f1, doublederiv_f1, x0=0.5)
 
-    print("\n Algorithm 2 (N-D) ")
-    print("f(x,y) = 0.5x^2 + 2.5y^2,  start = [-1, 1],  tol = 1e-5")
+    print("\nAlgorithm 2 (N-D) ")
+    print("f(x,y) = 0.5x^2 + 2.5y^2,  start = [-1, 1],  tol = 1e-5\n")
     newton_nd(f2, grad_f2, hessian_f2, x0=[-1.0, 1.0])
