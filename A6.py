@@ -60,14 +60,26 @@ def f1(x):
 def derivative_f1(x):
     return 2*x - 2
  
-def double_deri_f1(x):
+def doublederiv_f1(x):
     return 2.0
+
+def f2(x):
+    return 0.5*x[0]**2 + 2.5*x[1]**2
+ 
+def grad_f2(x):
+    return np.array([x[0], 5.0*x[1]])
+ 
+def hessian_f2(x):
+    return np.array([[1.0, 0.0],
+                     [0.0, 5.0]])
+ 
 
 if __name__ == "__main__":
 
     print(" Algorithm 1 (1-D) ")
     print("f(x) = x^2 - 2x + 1,  interval [-0.5, 1.5],  tol = 1e-5")
-    newton_1d(f1, derivative_f1, double_deri_f1, x0=0.5)
+    newton_1d(f1, derivative_f1, doublederiv_f1, x0=0.5)
 
     print("\n Algorithm 2 (N-D) ")
+    print("f(x,y) = 0.5x^2 + 2.5y^2,  start = [-1, 1],  tol = 1e-5")
     newton_nd(f2, grad_f2, hessian_f2, x0=[-1.0, 1.0])
