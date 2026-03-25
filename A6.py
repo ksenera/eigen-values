@@ -28,35 +28,28 @@ def newton(f, grad_f, hessian_f, x0, step_fn, tol=1e-5, max_iter=1000):
     for k in range(max_iter):
         g = grad_f(x)
         H = hessian_f(x)
-        print(k, x, f(x), g)
-        if norm(g) < tol:
-            break
+        if np.isscalar(x):
+            print(f"{k:<5}{x:<15.6f}{f(x):<15.6f}{g:<15.6f}")
         x = x + step_fn(H, g)
     return x
 
 
 def newton_1d(f, df, ddf, x0, tol=1e-5):
-    step = lambda H, g: -g / H          # scalar -f'/f''
-    return newton(f, df, ddf, x0, step, tol)
+    header = "f'(x)"
+    print(f"{'k':<5}{'x':<15}{'f(x)':<15}{header:<15}")
+    print("-" * 50)
+    return newton(f, df, ddf, x0, tol)
 
 
 def newton_nd(f, grad_f, hessian_f, x0, tol=1e-5):
-    step = lambda H, g: solve_2x2(H, -g)   # vector solve H*s = -∇f
-    return newton(f, grad_f, hessian_f, np.array(x0, dtype=float), step, tol)
+    print(f"{'k':<5}{'(x, y)':<20}{'f(x,y)':<15}{'grad f(x,y)':<25}")
+    print("-" * 65)
+    return newton(f, grad_f, hessian_f, np.array(x0, dtype=float), tol)
 
 if __name__ == "__main__":
 
-    f1   = lambda x: x**2 - 2*x + 1
-    df1  = lambda x: 2*x - 2
-    ddf1 = lambda x: 2.0
-
     print(" Algorithm 1 (1-D) ")
     newton_1d(f1, df1, ddf1, x0=0.5)
-
-    f2         = lambda x: 0.5*x[0]**2 + 2.5*x[1]**2
-    grad_f2    = lambda x: np.array([x[0], 5.0*x[1]])
-    hessian_f2 = lambda x: np.array([[1.0, 0.0],
-                                      [0.0, 5.0]])
 
     print("\n Algorithm 2 (N-D) ")
     newton_nd(f2, grad_f2, hessian_f2, x0=[-1.0, 1.0])
